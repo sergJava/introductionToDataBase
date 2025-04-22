@@ -1,21 +1,27 @@
 package ru.hogwarts.school.model;
 
-//import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Objects;
 
-@Entity
+import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
 
+
+@Entity
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)                     //(strategy = GenerationType.AUTO)
+    private Long id;
     private int age;
     private String name;
+
+    public Student(){}
+
+    public Student(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
 
     public Student(long id, String name, int age) {
         this.id = id;
@@ -23,14 +29,8 @@ public class Student {
         this.age = age;
     }
 
-    public Student(){}
-
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
