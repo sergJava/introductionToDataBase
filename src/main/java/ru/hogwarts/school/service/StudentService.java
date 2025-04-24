@@ -1,57 +1,49 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @Service
 public class StudentService {
-    private final Map<Long, Student> students = new HashMap<>();
-    private static long id = 1;
+    private final StudentRepository repository;
 
-    public Student createStudent(Student student) {
-        student.setId(id);
-        students.put(id, student);
-        id++;
-        return student;
+    public StudentService(StudentRepository repository) {
+        this.repository = repository;
     }
 
-//    public Student add(String name, int age) {
-//        return createStudent(new Student(0, name, age));
-//    }
+    public Student createStudent(Student student) {
+        return repository.save(student);
+    }
 
-    public Student getStudent(long id) {
+    public Student getStudent(Long id) {
         checkId(id);
-        return students.get(id);
+        return repository.findById(id).get();
     }
 
     public Student updateStudent(Student student) {
-        return students.put(student.getId(), student);
+        return repository.save(student);
     }
 
-    public Student deleteStudent(long id) {
+    public void deleteStudent(Long id) {
         checkId(id);
-        return students.remove(id);
+        repository.deleteById(id);
     }
 
-    private void checkId(long id) {
-        if (!students.containsKey(id)) {
+    public Collection<Student> getAllStudents() {
+        return repository.findAll();
+    }
+
+    private void checkId(Long id) {
+        if (!repository.existsById(id)) {
             throw new IllegalArgumentException("нет студента с таким id");
         }
     }
 
-    public Collection<Student> getAllStudents() {
-        return students.values();
-    }
-
-    public Collection<Student> sortingByAge(int age) {
-        return students.values()
-                .stream()
-                .filter(student -> student.getAge() == age)
-                .toList();
+    public Collection<Student> findByAge(int age) {
+        return repository.findByAge(age);
     }
 }

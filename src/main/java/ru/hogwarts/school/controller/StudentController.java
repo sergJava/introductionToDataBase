@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
@@ -24,16 +25,8 @@ public class StudentController {
 
     @GetMapping     //GET http://localhost:8080/student?id=3
     public ResponseEntity<Student> getStudent(@RequestParam long id) {
-        if (id < 1) {
-            return ResponseEntity.badRequest().build();
-        }
         return ResponseEntity.ok(studentService.getStudent(id));
     }
-
-//    @PutMapping("/add/{name}/{age}")        //POST http://localhost:8080/student/add/vovva/43
-//    public Student addStudent(@PathVariable String name, @PathVariable int age) {
-//        return studentService.add(name, age);
-//    }
 
     @PutMapping     //PUT http://localhost:8080/student
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
@@ -41,8 +34,9 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")      //DELETE http://localhost:8080/student/5
-    public ResponseEntity<Student> deleteStudent(@PathVariable long id) {
-        return ResponseEntity.ok(studentService.deleteStudent(id));
+    public ResponseEntity deleteStudent(@PathVariable long id) {
+        studentService.deleteStudent(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/getAll")     //GET http://localhost:8080/student/getAll
@@ -50,8 +44,8 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @GetMapping("/sorting")     //GET http://localhost:8080/student/sorting?age=41
-    public Collection<Student> sortingByAge(@RequestParam int age) {
-        return studentService.sortingByAge(age);
+    @GetMapping("/find")     //GET http://localhost:8080/student/find?age=41
+    public Collection<Student> findByAge(@RequestParam int age) {
+        return studentService.findByAge(age);
     }
 }
