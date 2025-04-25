@@ -10,34 +10,40 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
-    private final FacultyService facultyService;
+    private final FacultyService service;
 
-    public FacultyController(FacultyService facultyService) {
-        this.facultyService = facultyService;
+    public FacultyController(FacultyService service) {
+        this.service = service;
     }
 
     @PostMapping
     public ResponseEntity<Faculty> createFaculty(@RequestBody Faculty faculty) {
-        return ResponseEntity.ok(facultyService.createFaculty(faculty));
+        return ResponseEntity.ok(service.createFaculty(faculty));
     }
 
     @GetMapping
     public ResponseEntity<Faculty> getFaculty(@RequestParam Long id) {
-        return ResponseEntity.ok(facultyService.getFaculty(id));
+        return ResponseEntity.ok(service.getFaculty(id));
     }
 
     @PutMapping
     public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
-        return ResponseEntity.ok(facultyService.updateFaculty(faculty));
+        return ResponseEntity.ok(service.updateFaculty(faculty));
     }
 
     @DeleteMapping
-    public ResponseEntity<Faculty> deleteFaculty(@RequestParam long id) {
+    public ResponseEntity<Faculty> deleteFaculty(@RequestParam Long id) {
+        service.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/findByColor")
+    @GetMapping("/by-color")
     public Collection<Faculty> findByColor(@RequestParam String color) {
-        return facultyService.findByColor(color);
+        return service.findByColor(color);
+    }
+
+    @GetMapping("/by-name-or-color")
+    public Collection<Faculty> findByNameIgnoreCaseOrByColorIgnoreCase(@RequestParam String name, @RequestParam String color){
+        return service.findByNameIgnoreCaseOrColorIgnoreCase(name, color);
     }
 }

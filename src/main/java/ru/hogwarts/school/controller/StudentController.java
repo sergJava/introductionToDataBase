@@ -44,8 +44,13 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @GetMapping("/find")     //GET http://localhost:8080/student/find?age=41
+    @GetMapping("/by-age")     //GET http://localhost:8080/student/by-age?age=41
     public Collection<Student> findByAge(@RequestParam int age) {
         return studentService.findByAge(age);
+    }
+
+    @GetMapping("/by-age-between")
+    public Collection<Student> findByAgeBetween(@RequestParam int min, @RequestParam int max) {
+        return studentService.findByAgeBetween(min, max);
     }
 }
