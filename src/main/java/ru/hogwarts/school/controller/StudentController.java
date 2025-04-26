@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -17,34 +18,34 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping        //POST http://localhost:8080/student
+    @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         Student createdStudent = studentService.createStudent(student);
         return ResponseEntity.ok(createdStudent);
     }
 
-    @GetMapping     //GET http://localhost:8080/student?id=3
+    @GetMapping
     public ResponseEntity<Student> getStudent(@RequestParam long id) {
         return ResponseEntity.ok(studentService.getStudent(id));
     }
 
-    @PutMapping     //PUT http://localhost:8080/student
+    @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         return ResponseEntity.ok(studentService.updateStudent(student));
     }
 
-    @DeleteMapping("{id}")      //DELETE http://localhost:8080/student/5
-    public ResponseEntity deleteStudent(@PathVariable long id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/getAll")     //GET http://localhost:8080/student/getAll
+    @GetMapping("/getAll")
     public ResponseEntity<Collection<Student>> getAll() {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @GetMapping("/by-age")     //GET http://localhost:8080/student/by-age?age=41
+    @GetMapping("/by-age")
     public Collection<Student> findByAge(@RequestParam int age) {
         return studentService.findByAge(age);
     }
@@ -52,5 +53,10 @@ public class StudentController {
     @GetMapping("/by-age-between")
     public Collection<Student> findByAgeBetween(@RequestParam int min, @RequestParam int max) {
         return studentService.findByAgeBetween(min, max);
+    }
+
+    @GetMapping("/{id}/faculty")
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.getFacultyByStudentId(id));
     }
 }
