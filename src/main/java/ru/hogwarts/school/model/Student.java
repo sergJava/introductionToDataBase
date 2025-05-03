@@ -17,15 +17,11 @@ public class Student {
     public Student() {
     }
 
-    public Student(int age, String name, Long facultyId) {
+    public Student(int age, String name
+//            , Long facultyId
+    ) {
         this.age = age;
         this.name = name;
-    }
-
-    public Student(long id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
     }
 
     @ManyToOne
@@ -33,8 +29,14 @@ public class Student {
     @JsonBackReference
     private Faculty faculty;
 
+//    private Long facultyId;
+
     public long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
