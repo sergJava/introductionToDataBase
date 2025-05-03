@@ -31,7 +31,7 @@ public class Student {
 
 //    private Long facultyId;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -65,7 +65,8 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student: id= " + id + ", name= " + name + ", age= " + age + "faculty= " + faculty.getName();
+        return "Student: id= " + id + ", name= " + name + ", age= " + age
+                + "faculty= " + (faculty != null ? faculty.getName() : "none");
     }
 
     @Override
