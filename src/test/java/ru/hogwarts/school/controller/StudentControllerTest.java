@@ -91,11 +91,9 @@ public class StudentControllerTest {
         savedStudent.setName("New Student");
         savedStudent.setAge(24);
 
-        restTemplate.put(baseUrl, savedStudent);
-        ResponseEntity<Student> response = restTemplate.getForEntity(baseUrl + "?id=" + savedStudent.getId(), Student.class);
-        // через метод exchange:
-//        HttpEntity<Student> request = new HttpEntity<>(savedStudent);
-//        ResponseEntity<Student> response = restTemplate.exchange(baseUrl, HttpMethod.PUT, request, Student.class);
+        HttpEntity<Student> request = new HttpEntity<>(savedStudent);
+        ResponseEntity<Student> response = restTemplate.exchange(baseUrl, HttpMethod.PUT, request, Student.class);
+
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().getName()).isEqualTo("New Student");
         assertThat(response.getBody().getAge()).isEqualTo(24);
