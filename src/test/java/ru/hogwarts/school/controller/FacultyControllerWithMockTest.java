@@ -16,6 +16,8 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.FacultyService;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -53,6 +55,30 @@ public class FacultyControllerWithMockTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/faculty")
+                        .content(jsonObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$id").value(id))
+                .andExpect(jsonPath("$name").value(name))
+                .andExpect(jsonPath("$color").value(color));
+    }
+
+    @Test
+    public void getFacultyTest() throws Exception {
+        Long id = 1L;
+        String name = "Test Name2";
+        String color = "color2";
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", name);
+        jsonObject.put("color", color);
+        Faculty faculty = new Faculty(id, name, color);
+
+        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
+        when(facultyRepository.existsById(any(Long.class))).thenReturn(true);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty?id=" + faculty.getId())
                         .content(jsonObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

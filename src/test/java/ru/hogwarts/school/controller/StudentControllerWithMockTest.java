@@ -81,7 +81,6 @@ public class StudentControllerWithMockTest {
         student.setAge(age);
         student.setName(name);
 
-//        when(studentRepository.save(any(Student.class))).thenReturn(student);
         when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(student));
         when(studentRepository.existsById(any(Long.class))).thenReturn(true);
 

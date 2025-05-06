@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @Service
-public class StudentService {
+public class   StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
 
