@@ -25,7 +25,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<Student> getStudent(@RequestParam Long id) {
+    public ResponseEntity<Student> getStudent(@RequestParam(required = false) Long id) {
         return ResponseEntity.ok(studentService.getStudent(id));
     }
 
