@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = StudentController.class)
-//@WebMvcTest
 public class StudentControllerWithMockTest {
     @Autowired
     private MockMvc mockMvc;
@@ -56,7 +55,6 @@ public class StudentControllerWithMockTest {
         student.setName(name);
 
         when(studentRepository.save(any(Student.class))).thenReturn(student);
-//        when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(student));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/student")
