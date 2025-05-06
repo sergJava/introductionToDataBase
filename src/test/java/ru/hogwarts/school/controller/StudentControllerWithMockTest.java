@@ -73,9 +73,6 @@ public class StudentControllerWithMockTest {
         int age = 52;
         String name = "Test Name2";
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("age", age);
-        jsonObject.put("name", name);
         Student student = new Student();
         student.setId(id);
         student.setAge(age);
@@ -85,10 +82,7 @@ public class StudentControllerWithMockTest {
         when(studentRepository.existsById(any(Long.class))).thenReturn(true);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student?id=" + student.getId())
-                        .content(jsonObject.toString())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .get("/student?id=" + student.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.age").value(age))
@@ -98,19 +92,17 @@ public class StudentControllerWithMockTest {
     @Test
     public void putStudentTest() throws Exception {
         Long id = 3L;
-        int age = 53;
-        String name = "New Name";
+        int newAge = 53;
+        String newName = "New Name";
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", id);
-        jsonObject.put("age", age);
-        jsonObject.put("name", name);
+        jsonObject.put("age", newAge);
+        jsonObject.put("name", newName);
         Student existsStudent = new Student(49, "Old Name");
         existsStudent.setId(3L);
-        Student updatedStudent = new Student();
+        Student updatedStudent = new Student(newAge, newName);
         updatedStudent.setId(id);
-        updatedStudent.setAge(age);
-        updatedStudent.setName(name);
 
         when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(existsStudent));
         when(studentRepository.save(any(Student.class))).thenReturn(updatedStudent);
@@ -123,8 +115,8 @@ public class StudentControllerWithMockTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.age").value(age))
-                .andExpect(jsonPath("$.name").value(name));
+                .andExpect(jsonPath("$.age").value(newAge))
+                .andExpect(jsonPath("$.name").value(newName));
     }
 
     @Test
