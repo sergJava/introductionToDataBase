@@ -3,7 +3,6 @@ package ru.hogwarts.school.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -57,8 +56,6 @@ public class StudentControllerTest {
         student.setName("Test student1");
         student.setAge(19);
         student.setFaculty(faculty);
-
-//        studentRepository.save(student);
 
         ResponseEntity<Student> response = restTemplate.postForEntity(baseUrl, student, Student.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

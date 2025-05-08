@@ -45,8 +45,8 @@ public class FacultyController {
     }
 
     @GetMapping("/by-name-or-color")
-    public Collection<Faculty> findByName(@RequestParam String name, @RequestParam String color) {
-        return facultyService.findByName(name, color);
+    public Collection<Faculty> findByNameOrColor(@RequestParam String name, @RequestParam String color) {
+        return facultyService.findByNameOrColor(name, color);
     }
 
     @GetMapping("/{id}/students")
