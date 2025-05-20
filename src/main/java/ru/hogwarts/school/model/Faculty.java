@@ -16,12 +16,24 @@ public class Faculty {
     private String name;
     private String color;
 
+    public Faculty() {
+    }
+
+    public Faculty(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
+
     @OneToMany(mappedBy = "faculty")
     @JsonManagedReference
     private List<Student> students = new ArrayList<>();
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

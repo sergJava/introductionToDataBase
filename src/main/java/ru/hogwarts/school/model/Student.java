@@ -17,15 +17,9 @@ public class Student {
     public Student() {
     }
 
-    public Student(int age, String name, Long facultyId) {
+    public Student(int age, String name) {
         this.age = age;
         this.name = name;
-    }
-
-    public Student(long id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
     }
 
     @ManyToOne
@@ -33,8 +27,12 @@ public class Student {
     @JsonBackReference
     private Faculty faculty;
 
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -63,7 +61,8 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student: id= " + id + ", name= " + name + ", age= " + age + "faculty= " + faculty.getName();
+        return "Student: id= " + id + ", name= " + name + ", age= " + age
+                + "faculty= " + (faculty != null ? faculty.getName() : "none");
     }
 
     @Override
