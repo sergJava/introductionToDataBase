@@ -17,9 +17,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(int age, String name
-//            , Long facultyId
-    ) {
+    public Student(int age, String name) {
         this.age = age;
         this.name = name;
     }
@@ -28,8 +26,6 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     @JsonBackReference
     private Faculty faculty;
-
-//    private Long facultyId;
 
     public Long getId() {
         return id;

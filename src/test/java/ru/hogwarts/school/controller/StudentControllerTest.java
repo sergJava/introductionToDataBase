@@ -3,7 +3,6 @@ package ru.hogwarts.school.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -58,8 +57,6 @@ public class StudentControllerTest {
         student.setAge(19);
         student.setFaculty(faculty);
 
-//        studentRepository.save(student);
-
         ResponseEntity<Student> response = restTemplate.postForEntity(baseUrl, student, Student.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -91,11 +88,9 @@ public class StudentControllerTest {
         savedStudent.setName("New Student");
         savedStudent.setAge(24);
 
-        restTemplate.put(baseUrl, savedStudent);
-        ResponseEntity<Student> response = restTemplate.getForEntity(baseUrl + "?id=" + savedStudent.getId(), Student.class);
-        // через метод exchange:
-//        HttpEntity<Student> request = new HttpEntity<>(savedStudent);
-//        ResponseEntity<Student> response = restTemplate.exchange(baseUrl, HttpMethod.PUT, request, Student.class);
+        HttpEntity<Student> request = new HttpEntity<>(savedStudent);
+        ResponseEntity<Student> response = restTemplate.exchange(baseUrl, HttpMethod.PUT, request, Student.class);
+
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().getName()).isEqualTo("New Student");
         assertThat(response.getBody().getAge()).isEqualTo(24);
