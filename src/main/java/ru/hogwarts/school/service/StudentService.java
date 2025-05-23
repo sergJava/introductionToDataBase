@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @Service
-public class   StudentService {
+public class StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
 
@@ -73,4 +73,18 @@ public class   StudentService {
         }
         throw new IllegalArgumentException("нет такого студента");
     }
+
+    public Integer getCountOfStudents() {
+        return studentRepository.getCountOfStudents();
+    }
+
+    public Double getAverageAge() {
+        return studentRepository.getAverageAge();
+    }
+
+    public List<Student> findLastFiveStudent() {
+        return studentRepository.findLastFiveStudent();
+    }
+
+
 }
