@@ -19,6 +19,7 @@ target/
 *.iml
 *.ipr
 /out
+src/scripts.sql
 src/img.png
 src/img_1.png
 src/img_2.png
