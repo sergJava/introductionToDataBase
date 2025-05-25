@@ -19,6 +19,11 @@ target/
 *.iml
 *.ipr
 /out
+src/img.png
+src/img_1.png
+src/img_2.png
+src/img_3.png
+
 
 
 ### NetBeans ###
