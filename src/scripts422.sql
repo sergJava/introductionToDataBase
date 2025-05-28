@@ -1,0 +1,14 @@
+CREATE TABLE drivers (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(20) NOT NULL,
+	age INTEGER CHECK (age>0),
+	has_license BOOLEAN,
+	car_id INTEGER REFERENCES cars(id)
+);
+
+CREATE TABLE cars (
+	id SERIAL PRIMARY KEY,
+	brand VARCHAR(20) NOT NULL,
+	model VARCHAR(40),
+	price NUMERIC(10,2) NOT NULL
+);

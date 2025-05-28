@@ -18,6 +18,10 @@ public class Student {
     public Student() {
     }
 
+    public Student(String name) {
+        this.name = name;
+    }
+
     public Student(int age, String name) {
         this.age = age;
         this.name = name;
