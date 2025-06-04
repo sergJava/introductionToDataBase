@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -20,16 +22,21 @@ public class StudentService {
         this.facultyRepository = facultyRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     public Student createStudent(Student student) {
+        logger.info("Was invoked method for create student");
         return studentRepository.save(student);
     }
 
     public Student getStudent(Long id) {
+        logger.info("Was invoked method for get student");
         checkId(id);
         return studentRepository.findById(id).get();
     }
 
     public Student updateStudent(Student student) {
+        logger.info("Was invoke method for update student");
         Student studentFromDb = getStudent(student.getId());
         studentFromDb.setName(student.getName());
         studentFromDb.setAge(student.getAge());
@@ -40,16 +47,19 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
+        logger.info("Was invoke method for delete student");
         checkId(id);
         studentRepository.deleteById(id);
     }
 
     public List<Student> getAllStudents() {
+        logger.info("Was invoke method for get all students");
         return studentRepository.findAll();
     }
 
     private void checkId(Long id) {
         if (!studentRepository.existsById(id)) {
+            logger.error("There is not student with id = {}", id);
             throw new IllegalArgumentException("нет студента с таким id");
         }
     }
@@ -59,10 +69,12 @@ public class StudentService {
     }
 
     public List<Student> findByAgeBetween(int min, int max) {
+        logger.info("Was invoke method for get student by age");
         return studentRepository.findByAgeBetween(min, max);
     }
 
     public Faculty getFacultyByStudentId(Long studentId) {
+        logger.info("Was invoke method getFacultyByStudentId");
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
         if (optionalStudent.isPresent()) {
             Student student = optionalStudent.get();
@@ -71,18 +83,22 @@ public class StudentService {
                 return faculty;
             }
         }
+        logger.error("There is not student with id = {}", studentId);
         throw new IllegalArgumentException("нет такого студента");
     }
 
     public Integer getCountOfStudents() {
+        logger.info("Was invoke method getCountOfStudents");
         return studentRepository.getCountOfStudents();
     }
 
     public Double getAverageAge() {
+        logger.info("Was invoke method getAverageAge");
         return studentRepository.getAverageAge();
     }
 
     public List<Student> findLastFiveStudent() {
+        logger.info("Was invoke method findLastFiveStudent");
         return studentRepository.findLastFiveStudent();
     }
 
