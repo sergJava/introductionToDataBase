@@ -64,10 +64,14 @@ public class Student {
         this.faculty = faculty;
     }
 
+    public void setFacultyById(Long id) {
+        this.faculty.setId(id);
+    }
+
     @Override
     public String toString() {
         return "Student: id= " + id + ", name= " + name + ", age= " + age
-                + "faculty= " + (faculty != null ? faculty.getName() : "none");
+                + " faculty= " + (faculty != null ? faculty.getName() : "none");
     }
 
     @Override

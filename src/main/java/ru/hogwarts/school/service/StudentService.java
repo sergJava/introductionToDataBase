@@ -26,13 +26,16 @@ public class StudentService {
 
     public Student createStudent(Student student) {
         logger.info("Was invoked method for create student");
+        logger.debug("student {} created", student);
         return studentRepository.save(student);
     }
 
     public Student getStudent(Long id) {
         logger.info("Was invoked method for get student");
         checkId(id);
-        return studentRepository.findById(id).get();
+        Student student = studentRepository.findById(id).get();
+        logger.debug("get student {}", student);
+        return student;
     }
 
     public Student updateStudent(Student student) {
@@ -58,6 +61,7 @@ public class StudentService {
     }
 
     private void checkId(Long id) {
+        logger.info("Was invoked method checkId");
         if (!studentRepository.existsById(id)) {
             logger.error("There is not student with id = {}", id);
             throw new IllegalArgumentException("нет студента с таким id");
@@ -80,6 +84,7 @@ public class StudentService {
             Student student = optionalStudent.get();
             Faculty faculty = student.getFaculty();
             if (faculty != null) {
+                logger.debug("get faculty {}", faculty);
                 return faculty;
             }
         }
@@ -89,16 +94,21 @@ public class StudentService {
 
     public Integer getCountOfStudents() {
         logger.info("Was invoke method getCountOfStudents");
-        return studentRepository.getCountOfStudents();
+        Integer countOfStudents = studentRepository.getCountOfStudents();
+        logger.debug("count of student is {}", countOfStudents);
+        return countOfStudents;
     }
 
     public Double getAverageAge() {
         logger.info("Was invoke method getAverageAge");
-        return studentRepository.getAverageAge();
+        Double averageAge = studentRepository.getAverageAge();
+        logger.debug("average age is {}", averageAge);
+        return averageAge;
     }
 
     public List<Student> findLastFiveStudent() {
         logger.info("Was invoke method findLastFiveStudent");
+        logger.warn("warning! was invoke method findLastFiveStudents");
         return studentRepository.findLastFiveStudent();
     }
 

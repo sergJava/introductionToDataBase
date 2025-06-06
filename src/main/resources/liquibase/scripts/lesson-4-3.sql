@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS student(
   id SERIAL,
   age INTEGER,
   name TEXT
-)
+);
 
 CREATE TABLE IF NOT EXISTS faculty(
   id SERIAL,
