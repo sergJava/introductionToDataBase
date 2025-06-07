@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -20,16 +22,24 @@ public class StudentService {
         this.facultyRepository = facultyRepository;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     public Student createStudent(Student student) {
+        logger.info("Was invoked method for create student");
+        logger.debug("student {} created", student);
         return studentRepository.save(student);
     }
 
     public Student getStudent(Long id) {
+        logger.info("Was invoked method for get student");
         checkId(id);
-        return studentRepository.findById(id).get();
+        Student student = studentRepository.findById(id).get();
+        logger.debug("get student {}", student);
+        return student;
     }
 
     public Student updateStudent(Student student) {
+        logger.info("Was invoke method for update student");
         Student studentFromDb = getStudent(student.getId());
         studentFromDb.setName(student.getName());
         studentFromDb.setAge(student.getAge());
@@ -40,16 +50,20 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
+        logger.info("Was invoke method for delete student");
         checkId(id);
         studentRepository.deleteById(id);
     }
 
     public List<Student> getAllStudents() {
+        logger.info("Was invoke method for get all students");
         return studentRepository.findAll();
     }
 
     private void checkId(Long id) {
+        logger.info("Was invoked method checkId");
         if (!studentRepository.existsById(id)) {
+            logger.error("There is not student with id = {}", id);
             throw new IllegalArgumentException("нет студента с таким id");
         }
     }
@@ -59,30 +73,42 @@ public class StudentService {
     }
 
     public List<Student> findByAgeBetween(int min, int max) {
+        logger.info("Was invoke method for get student by age");
         return studentRepository.findByAgeBetween(min, max);
     }
 
     public Faculty getFacultyByStudentId(Long studentId) {
+        logger.info("Was invoke method getFacultyByStudentId");
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
         if (optionalStudent.isPresent()) {
             Student student = optionalStudent.get();
             Faculty faculty = student.getFaculty();
             if (faculty != null) {
+                logger.debug("get faculty {}", faculty);
                 return faculty;
             }
         }
+        logger.error("There is not student with id = {}", studentId);
         throw new IllegalArgumentException("нет такого студента");
     }
 
     public Integer getCountOfStudents() {
-        return studentRepository.getCountOfStudents();
+        logger.info("Was invoke method getCountOfStudents");
+        Integer countOfStudents = studentRepository.getCountOfStudents();
+        logger.debug("count of student is {}", countOfStudents);
+        return countOfStudents;
     }
 
     public Double getAverageAge() {
-        return studentRepository.getAverageAge();
+        logger.info("Was invoke method getAverageAge");
+        Double averageAge = studentRepository.getAverageAge();
+        logger.debug("average age is {}", averageAge);
+        return averageAge;
     }
 
     public List<Student> findLastFiveStudent() {
+        logger.info("Was invoke method findLastFiveStudent");
+        logger.warn("warning! was invoke method findLastFiveStudents");
         return studentRepository.findLastFiveStudent();
     }
 

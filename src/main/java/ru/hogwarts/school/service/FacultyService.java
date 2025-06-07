@@ -52,4 +52,8 @@ public class FacultyService {
                 .map(Faculty::getStudents)
                 .orElseThrow(() -> new IllegalArgumentException("нет такого факультета"));
     }
+
+    public List<Faculty> getAllFaculties() {
+        return facultyRepository.findAll();
+    }
 }
