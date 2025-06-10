@@ -58,4 +58,14 @@ public class FacultyController {
     public ResponseEntity<List<Faculty>> getAllFaculties() {
         return ResponseEntity.ok(facultyService.getAllFaculties());
     }
+
+    @GetMapping("/longest-name")
+    public ResponseEntity<String> findLongestName() {
+        return ResponseEntity.ok(facultyService.findLongestName());
+    }
+
+    @GetMapping("/count-with-parallel-stream")
+    public ResponseEntity<Integer> getCountWithParallelStream(){
+        return ResponseEntity.ok(facultyService.getCountWithParallelStream());
+    }
 }

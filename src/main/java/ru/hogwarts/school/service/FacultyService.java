@@ -5,7 +5,9 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
@@ -55,5 +57,25 @@ public class FacultyService {
 
     public List<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
+    }
+
+    public String findLongestName(){
+        String longestName = facultyRepository.findAll().stream()
+                .map(faculty -> faculty.getName())
+                .max(Comparator.comparingInt(String::length))
+                .orElse("Факультета нет");
+        return longestName;
+    }
+
+    public Integer getCountWithParallelStream(){
+        long startTime = System.nanoTime();
+        int sum = Stream.iterate(1, a -> a +1)
+                .parallel()
+                .limit(1_000_000)
+                .reduce(0, (a, b) -> a + b );
+        long endTime = System.nanoTime();
+        long timing = (endTime - startTime)/1_000_000;
+        System.out.println("затрачено " + timing + " мсек.");
+        return sum;
     }
 }

@@ -8,8 +8,10 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
 
 
 @Service
@@ -112,5 +114,22 @@ public class StudentService {
         return studentRepository.findLastFiveStudent();
     }
 
+    public List<String> findStudentNamesBeginWithA() {
+        List<String> names = studentRepository.findAll().stream()
+                .map(Student::getName)
+                .filter(name -> name.toUpperCase().startsWith("A"))
+                .sorted()
+                .map(String::toUpperCase)
+                .toList();
+        return names;
+    }
+
+    public Double getAverageAgeByStream() {
+        Double average = studentRepository.findAll().stream()
+                .mapToInt(student -> student.getAge())
+                .average()
+                .orElse(0);
+        return average;
+    }
 
 }
