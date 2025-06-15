@@ -7,6 +7,7 @@ import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 @Service
@@ -67,15 +68,15 @@ public class FacultyService {
         return longestName;
     }
 
-    public Integer getCountWithParallelStream(){
+    public Map<String, Long> getCountWithParallelStream(){
         long startTime = System.nanoTime();
-        int sum = Stream.iterate(1, a -> a +1)
+        long sum = Stream.iterate(1, a -> a +1)
                 .parallel()
                 .limit(1_000_000)
                 .reduce(0, (a, b) -> a + b );
         long endTime = System.nanoTime();
         long timing = (endTime - startTime)/1_000_000;
         System.out.println("затрачено " + timing + " мсек.");
-        return sum;
+        return Map.of("сумма ", sum, "затрачено, мс ", timing);
     }
 }

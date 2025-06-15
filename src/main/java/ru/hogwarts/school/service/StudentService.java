@@ -132,4 +132,65 @@ public class StudentService {
         return average;
     }
 
+    public String printStudentNameParallel() throws InterruptedException {
+        List<Student> students = getAllStudents();
+        System.out.println("первый студент " + students.get(0).getName());
+        Thread.sleep(100);
+        System.out.println("второй студент " + students.get(1).getName());
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("третий студент " + students.get(2).getName());
+            System.out.println("четвертый студент " + students.get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("пятый студент " + students.get(4).getName());
+            System.out.println("шестой студент " + students.get(5).getName());
+        }).start();
+        return "Имена студентов выведены в консоль";
+    }
+
+    private synchronized void printSynchronized(String text, String studentName){
+        System.out.println(text + studentName);
+    }
+
+    public String printStudentSynchronized() throws InterruptedException {
+        List<Student> students = getAllStudents();
+        printSynchronized("первый студент ", students.get(0).getName());
+        Thread.sleep(100);
+        printSynchronized("второй студент ", students.get(1).getName());
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            printSynchronized("третий студент ", students.get(2).getName());
+            printSynchronized("четвертый студент ", students.get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            printSynchronized("пятый студент ", students.get(4).getName());
+            printSynchronized("шестой студент ", students.get(5).getName());
+        }).start();
+        return "Имена студентов синхронизированно выведены в консоль";
+    }
+
+
 }
