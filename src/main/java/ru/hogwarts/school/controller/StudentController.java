@@ -82,9 +82,17 @@ public class StudentController {
     }
 
     @GetMapping("/get-average-age-by-streams")
-    public ResponseEntity<Double> getAverageAgeByStream(){
+    public ResponseEntity<Double> getAverageAgeByStream() {
         return ResponseEntity.ok(studentService.getAverageAgeByStream());
     }
 
+    @GetMapping("/print-parallel")
+    public ResponseEntity<String> printStudentsParallel() throws InterruptedException {
+        return ResponseEntity.ok(studentService.printStudentNameParallel());
+    }
 
+    @GetMapping("/print-synchronized")
+    public ResponseEntity<String> printStudentsSynchronized() throws InterruptedException {
+        return ResponseEntity.ok(studentService.printStudentSynchronized());
+    }
 }

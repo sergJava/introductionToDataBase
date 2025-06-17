@@ -6,8 +6,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/faculty")
@@ -65,7 +64,7 @@ public class FacultyController {
     }
 
     @GetMapping("/count-with-parallel-stream")
-    public ResponseEntity<Integer> getCountWithParallelStream(){
+    public ResponseEntity<Map<String, Long>> getCountWithParallelStream(){
         return ResponseEntity.ok(facultyService.getCountWithParallelStream());
     }
 }
